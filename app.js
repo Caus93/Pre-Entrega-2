@@ -1,5 +1,64 @@
+alert("Bienvenidos a Aftermath Store");
+
+const musica = [
+  {
+    artista: "Caus",
+    ep: "Freedom",
+    cantidadTracks: 2,
+    precio: 15,
+    sello: "Aftermath",
+  },
+  {
+    artista: "Traumer",
+    ep: "Soul",
+    cantidadTracks: 3,
+    precio: 30,
+    sello: "Aftermath",
+  },
+  {
+    artista: "Apollonia",
+    ep: "Magic",
+    cantidadTracks: 3,
+    precio: 25,
+    sello: "Aftermath",
+  },
+  {
+    artista: "Ben Sterling",
+    ep: "Dancing Queen",
+    cantidadTracks: 2,
+    precio: 20,
+    sello: "Aftermath",
+  },
+];
+
+const ropa = [
+  {
+    tipo: "Hoodie",
+    marca: "Aftermath",
+    talla: "M",
+    color: "negro",
+    precio: 30,
+  },
+  {
+    tipo: "Camiseta",
+    marca: "Aftermath",
+    talla: "S",
+    color: "blanco",
+    precio: 10,
+  },
+  {
+    tipo: "Pantalon",
+    marca: "Aftermath",
+    talla: "L",
+    color: "gris",
+    precio: 40,
+  },
+  { tipo: "Gorro", marca: "Aftermath", talla: "M", color: "negro", precio: 5 },
+];
+
+let carrito = [];
+
 function menuPrincipal() {
-  let total = 0;
   let menu;
   do {
     menu = prompt(
@@ -8,14 +67,13 @@ function menuPrincipal() {
     menu = parseInt(menu);
     switch (menu) {
       case 1:
-        total = total + comprarMusica();
+        comprarMusica(musica);
         break;
       case 2:
-        total = total + comprarMerch();
+        comprarMerch(ropa);
         break;
       case 3:
-        alert("El total de la cuenta es " + total);
-        total = 0;
+        alert(totalCuenta(carrito));
         break;
       case 4:
         alert("Saliendo...");
@@ -26,44 +84,72 @@ function menuPrincipal() {
   } while (menu != 4);
 }
 
-function comprarMusica() {
-  let acumulador = 0;
-  alert("Seleccione el EP a comprar");
-  alert("1- Freedom EP $15 \n 2- Move EP $10");
-  let musica = prompt("Ingrese el EP a comprar");
-  musica = parseInt(musica);
+function comprarMusica(musica) {
+  alert("Seleccione el EP a comprar por el nombre del artista");
+  let mensaje = "";
+  let mensajeMusica;
+  musica.forEach((music) => {
+    mensajeMusica =
+      "Artista: " +
+      music.artista +
+      ", Nombre EP: " +
+      music.ep +
+      ", Cantidad tracks: " +
+      music.cantidadTracks +
+      ", El precio es: $" +
+      music.precio +
+      ", Del sello: " +
+      music.sello +
+      "\n";
+    mensaje = mensaje + mensajeMusica;
+  });
 
-  switch (musica) {
-    case 1:
-      acumulador = 15;
-      break;
-    case 2:
-      acumulador = 10;
-      break;
-    default:
-      alert("Opción inválida");
-  }
-  return acumulador;
+  let item = prompt(mensaje);
+  console.log(item);
+
+  let musicaEncontrada = musica.filter((artista) =>
+    artista.artista.includes(item)
+  );
+  console.log(musicaEncontrada);
+
+  carrito = carrito.concat(musicaEncontrada);
 }
 
-function comprarMerch() {
-  let acumulador = 0;
-  alert("Seleccione la ropa a comprar");
-  alert("1- Hoodie $30 \n 2- Camiseta $10");
-  let merch = prompt("Ingrese los productos a comprar");
-  merch = parseInt(merch);
+function comprarMerch(ropa) {
+  alert("Seleccione la ropa a comprar por el tipo");
+  let mensaje = "";
+  let mensajeRopa;
+  ropa.forEach((merch) => {
+    mensajeRopa =
+      "Tipo: " +
+      merch.tipo +
+      ", Marca: " +
+      merch.marca +
+      ", Talla: " +
+      merch.talla +
+      ", Color: " +
+      merch.color +
+      ", Precio: $" +
+      merch.precio +
+      "\n";
+    mensaje = mensaje + mensajeRopa;
+  });
 
-  switch (merch) {
-    case 1:
-      acumulador = 30;
-      break;
-    case 2:
-      acumulador = 10;
-      break;
-    default:
-      alert("Opción inválida");
-  }
-  return acumulador;
+  let item = prompt(mensaje);
+  console.log(item);
+
+  let ropaEncontrada = ropa.filter((tipo) => tipo.tipo.includes(item));
+  console.log(ropaEncontrada);
+
+  carrito = carrito.concat(ropaEncontrada);
+}
+
+function totalCuenta(carrito) {
+  let total = 0;
+  carrito.forEach((car) => {
+    total = total + car.precio;
+  });
+  return "el total de la cuenta es " + total;
 }
 
 menuPrincipal();
