@@ -105,12 +105,20 @@ function comprarMusica(musica) {
   });
 
   let item = prompt(mensaje);
-  console.log(item);
 
   let musicaEncontrada = musica.filter((artista) =>
     artista.artista.includes(item)
   );
-  console.log(musicaEncontrada);
+
+  while (musicaEncontrada == 0) {
+    alert("Ingrese el nombre del artista correctamente");
+
+    item = prompt(mensaje);
+
+    musicaEncontrada = musica.filter((artista) =>
+      artista.artista.includes(item)
+    );
+  }
 
   carrito = carrito.concat(musicaEncontrada);
 }
@@ -136,10 +144,16 @@ function comprarMerch(ropa) {
   });
 
   let item = prompt(mensaje);
-  console.log(item);
 
   let ropaEncontrada = ropa.filter((tipo) => tipo.tipo.includes(item));
-  console.log(ropaEncontrada);
+
+  while (ropaEncontrada == 0) {
+    alert("Ingrese el tipo de ropa a comprar correctamente");
+
+    item = prompt(mensaje);
+
+    ropaEncontrada = ropa.filter((tipo) => tipo.tipo.includes(item));
+  }
 
   carrito = carrito.concat(ropaEncontrada);
 }
@@ -149,7 +163,7 @@ function totalCuenta(carrito) {
   carrito.forEach((car) => {
     total = total + car.precio;
   });
-  return "el total de la cuenta es " + total;
+  return "el total de la cuenta es $" + total;
 }
 
 menuPrincipal();
